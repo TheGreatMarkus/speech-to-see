@@ -15,6 +15,7 @@ async function quickstart() {
   
     // Detects the sentiment of the text
     const [result] = await client.analyzeEntitySentiment({document: document});
+    console.log(result);
     const sentiment = result.documentSentiment;
   
     console.log(`Text: ${text}`);
