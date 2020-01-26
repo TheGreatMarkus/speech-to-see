@@ -1,10 +1,8 @@
 import React from "react";
 
-const Text = ({ data, id }) => (
+const Text = ({ data }) => (
   <div>
-    <p>
-      {data} {id}
-    </p>
+    <p>{data}</p>
   </div>
 );
 

@@ -91,7 +91,7 @@ class App extends React.Component {
           ({ id, componentName, ...otherProps }) => {
             const ComponentName = components[componentName];
             return (
-              <Draggable key={id} style>
+              <Draggable key={id}>
                 <div>
                   <ComponentName id={id} {...otherProps} />
                 </div>
