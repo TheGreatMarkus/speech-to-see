@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SpeechRecognition from "react-speech-recognition";
-import axios from 'axios';
+import axios from "axios";
 
 const serverBaseUrl = "http://localhost:1337";
 let gTranscript = "";
@@ -22,8 +22,22 @@ const Dictaphone = ({
   startListening,
   stopListening,
   browserSupportsSpeechRecognition,
-  listening
+  listening,
+  onQuery
 }) => {
+  function sendTranscript(transcript) {
+    console.log(`Sending api call with transcript: ${transcript}`);
+    let request = {
+      speech: transcript
+    };
+    console.log(request);
+
+    axios.post(`${serverBaseUrl}/api/voice-command`, request).then(response => {
+      console.log(response);
+      onQuery(response.data);
+    });
+  }
+
   if (!browserSupportsSpeechRecognition) {
     return null;
   }
@@ -37,7 +51,13 @@ const Dictaphone = ({
     <div>
       <div>
         <button onClick={startListening}>start</button>
-        <button onClick={() => { stopListening() }}>stop</button>
+        <button
+          onClick={() => {
+            stopListening();
+          }}
+        >
+          stop
+        </button>
         <button onClick={resetTranscript}>Reset</button>
       </div>
       <span>Transcript: {transcript}</span>
@@ -45,23 +65,10 @@ const Dictaphone = ({
   );
 };
 
-function sendTranscript(transcript) {
-  console.log(`Sending api call with transcript: ${transcript}`);
-  let request = {
-    speech: transcript
-  }
-  console.log(request);
-
-  axios.post(`${serverBaseUrl}/api/voice-command`, request).then(response => {
-    console.log(response);
-  })
-}
-
-
 const options = {
   autoStart: false,
   continuous: false
-}
+};
 
 Dictaphone.propTypes = propTypes;
 
