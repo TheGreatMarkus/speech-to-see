@@ -5,6 +5,7 @@ const port = 1337;
 const common_path = '/api';
 const cors = require('cors');
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -30,17 +31,12 @@ app.get(`${common_path}/hello`, (req, res) => {
  * 
  */
 app.post(`${common_path}/voice-command`, (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-
-    console.log("get-voice-commands endpoint called");
-
+    console.log("voice-command endpoint called");
+    console.log(`body: ${JSON.stringify(req.body)}`);
+    
     let nlp = require('./services/nlp');
-    console.log("BODY");
-    console.log(req.body);
 
     nlp.processString(req.body.speech).then(response => {
-        console.log("response")
         res.json(response);
     }).catch(err => {
         console.log(err);

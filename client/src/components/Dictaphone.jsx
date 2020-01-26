@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SpeechRecognition from "react-speech-recognition";
+import axios from 'axios';
 
 const serverBaseUrl = "http://localhost:1337";
 let gTranscript = "";
@@ -23,16 +24,20 @@ const Dictaphone = ({
   browserSupportsSpeechRecognition,
   listening
 }) => {
-  gTranscript = transcript;
   if (!browserSupportsSpeechRecognition) {
     return null;
+  }
+  if (!listening && transcript !== "") {
+    console.log("Calling endpoint");
+    sendTranscript(transcript);
+    resetTranscript();
   }
 
   return (
     <div>
       <div>
         <button onClick={startListening}>start</button>
-        <button onClick={() => { stopListening(); resetTranscript(); sendTranscript() }}>stop</button>
+        <button onClick={() => { stopListening() }}>stop</button>
         <button onClick={resetTranscript}>Reset</button>
       </div>
       <span>Transcript: {transcript}</span>
@@ -40,23 +45,16 @@ const Dictaphone = ({
   );
 };
 
-function sendTranscript() {
-  console.log(`Sending api call with transcript: ${gTranscript}`);
+function sendTranscript(transcript) {
+  console.log(`Sending api call with transcript: ${transcript}`);
   let request = {
-    "speech": gTranscript
+    speech: transcript
   }
   console.log(request);
 
-  fetch(`${serverBaseUrl}/api/voice-command`, {
-    method: 'POST',
-    body: JSON.stringify(request)
-  }).then(response => {
-    return response.json();
-  }).then(jsonRes => {
-    console.log(jsonRes);
-  }).catch(err => {
-    console.log('Error', err);
-  });
+  axios.post(`${serverBaseUrl}/api/voice-command`, request).then(response => {
+    console.log(response);
+  })
 }
 
 

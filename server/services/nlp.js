@@ -15,7 +15,6 @@ module.exports.processString = async function processString(text) {
     type: 'PLAIN_TEXT'
   };
 
-  console.log(`text: ${text}`)
   if (text === null || typeof text === 'undefined') {
     return {
       action: "",
