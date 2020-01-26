@@ -36,8 +36,7 @@ app.post(`${common_path}/get-voice-commands`, (req, res) => {
 
     let nlp = require('./services/nlp');
 
-    // data = nlp.processString(req.body.speech);
-
-    res.json(req.body);
-
+    nlp.processString(req.body.speech).then(response => {
+        res.json(response);
+    });
 });
