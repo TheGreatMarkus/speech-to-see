@@ -2,7 +2,6 @@ const sstk = require("shutterstock-api");
 require('dotenv').config({path:'../.env'});
 
 sstk.setBasicAuth(process.env.ID, process.env.SECRET);
-console.log(process.env.ID)
 const imagesApi = new sstk.ImagesApi();
 
 const queryParams = {
