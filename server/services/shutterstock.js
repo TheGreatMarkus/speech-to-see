@@ -1,19 +1,18 @@
-const sstk = require("shutterstock-api");
-require('dotenv').config({path:'../.env'});
+module.exports.searchImage = async function searchImage(keyword) {
+    const sstk = require("shutterstock-api");
 
-sstk.setBasicAuth(process.env.ID, process.env.SECRET);
-const imagesApi = new sstk.ImagesApi();
+    sstk.setBasicAuth(process.env.ID, process.env.SECRET);
+    const imagesApi = new sstk.ImagesApi();
 
-const queryParams = {
-  "query": "New York",
-  "sort": "popular",
-  "orientation": "horizontal"
-};
+    const queryParams = {
+        "query": keyword,
+        "sort": "popular",
+        "orientation": "horizontal",
+        "safe": true,
+        "image_type": ["photo"]
+    };
 
-imagesApi.searchImages(queryParams)
-  .then((data) => {
-    console.log(JSON.stringify(data));
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+    const data = await imagesApi.searchImages(queryParams);
+
+    return data.data[0].assets.preview.url;
+}
