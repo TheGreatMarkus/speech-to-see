@@ -21,19 +21,23 @@ app.get(`${common_path}/hello`, (req, res) => {
  *    "speech": string
  * }
  * 
+ * How to get string: res.body.speech
+ * 
  * Promised response body:
  * 
  * TBD
  * 
  */
 app.post(`${common_path}/get-voice-commands`, (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
     console.log("get-voice-commands endpoint called");
-    console.log(req.body);
 
     let nlp = require('./services/nlp');
 
     // data = nlp.processString(req.body.speech);
 
     res.json(req.body);
-    
+
 });
