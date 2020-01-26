@@ -1,5 +1,5 @@
 import React from "react";
-
+import Draggable from 'react-draggable';
 import Text from "./components/text.component";
 
 import "./App.css";
@@ -74,7 +74,12 @@ class App extends React.Component {
         {this.state.loadedComponents.map(
           ({ id, componentName, ...otherProps }) => {
             const ComponentName = components[componentName];
-            return <ComponentName key={id} id={id} {...otherProps} />;
+            return (<Draggable key={id}> 
+            <div> 
+            <ComponentName  id={id} {...otherProps} />
+            </div>
+            </Draggable>
+            )
           }
         )}
       </div>
