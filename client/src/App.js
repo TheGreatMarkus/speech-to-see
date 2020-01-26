@@ -62,17 +62,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Dictaphone onQuery={this.handleQuery} />
-        <button
-          onClick={() => {
-            const newComponent = DATA();
-            this.setState({
-              loadedComponents: this.state.loadedComponents.concat(newComponent)
-            });
-          }}
-        >
-          Hello
-        </button>
-        <button
+        {/* <button
           onClick={() => {
             const last = this.state.loadedComponents;
             last.pop();
@@ -82,7 +72,7 @@ class App extends React.Component {
           }}
         >
           Remove
-        </button>
+        </button> */}
         <input type="number" onChange={this.handleId} />
         <button
           onClick={() => {
