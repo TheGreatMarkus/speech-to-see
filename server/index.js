@@ -1,4 +1,4 @@
-require('dotenv').config({path:'./.env'});
+require('dotenv').config({ path: './.env' });
 const express = require('express');
 const app = express();
 const port = 1337;
@@ -29,6 +29,27 @@ app.get(`${common_path}/hello`, (req, res) => {
  * TBD
  * 
  */
+app.post(`${common_path}/voice-command`, (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+    console.log("get-voice-commands endpoint called");
+
+    let nlp = require('./services/nlp');
+    console.log("BODY");
+    console.log(req.body);
+
+    nlp.processString(req.body.speech).then(response => {
+        console.log("response")
+        res.json(response);
+    }).catch(err => {
+        console.log(err);
+    });
+
+
+
+});
+
 
 app.get(`${common_path}/nlp-to-image`, (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -40,5 +61,5 @@ app.get(`${common_path}/nlp-to-image`, (req, res) => {
 
     nlpToImage.nlpToImage(req.body.text).then(response => {
         res.json(response);
-    }).catch((err) => {console.log(err)});
+    }).catch((err) => { console.log(err) });
 });

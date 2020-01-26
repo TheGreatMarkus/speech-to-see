@@ -15,10 +15,18 @@ module.exports.processString = async function processString(text) {
     type: 'PLAIN_TEXT'
   };
 
+  console.log(`text: ${text}`)
+  if (text === null || typeof text === 'undefined') {
+    return {
+      action: "",
+      object: ""
+    }
+  }
+
   // Detects the sentiment of the text
   const [result] = await client.annotateText({ document: document, features: features });
-  // Currently assume that there is one sentence
 
+  // Currently assume that there is one sentence
   const tokens = result.tokens;
   const entities = result.entities;
 
@@ -41,6 +49,6 @@ module.exports.processString = async function processString(text) {
     object
   };
 
-  return response ;
+  return response;
 }
 
