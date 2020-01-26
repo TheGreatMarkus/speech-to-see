@@ -2,13 +2,20 @@ import React from "react";
 import PropTypes from "prop-types";
 import SpeechRecognition from "react-speech-recognition";
 
+
+
+const axios = require('axios');
+const instance = axios.create({baseURL: 'http://localhost:1337'})
+
+
 const propTypes = {
   // Props injected by SpeechRecognition
   transcript: PropTypes.string,
   resetTranscript: PropTypes.func,
   startListening: PropTypes.func,
   stopListening: PropTypes.func,
-  browserSupportsSpeechRecognition: PropTypes.bool
+  browserSupportsSpeechRecognition: PropTypes.bool,
+  listening: PropTypes.bool
 };
 
 const Dictaphone = ({
@@ -16,12 +23,26 @@ const Dictaphone = ({
   resetTranscript,
   startListening,
   stopListening,
-  browserSupportsSpeechRecognition
+  browserSupportsSpeechRecognition,
+  listening
 }) => {
   if (!browserSupportsSpeechRecognition) {
     return null;
   }
 
+  if(!listening)
+  {
+    instance.post('/api/get-voice-commands',
+    {
+      speech: transcript
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
 
 
   return (
