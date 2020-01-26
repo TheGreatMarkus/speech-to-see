@@ -1,7 +1,7 @@
 import React from "react";
 import Draggable from 'react-draggable';
 import Text from "./components/text.component";
-
+import Dictaphone from "./components/Dictaphone";
 import "./App.css";
 
 const DATA = () => {
@@ -36,6 +36,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+        <Dictaphone />
         <button
           onClick={() => {
             const newComponent = DATA();
