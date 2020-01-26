@@ -28,28 +28,16 @@ app.get(`${common_path}/hello`, (req, res) => {
  * TBD
  * 
  */
-app.post(`${common_path}/get-voice-commands`, (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
-    console.log("get-voice-commands endpoint called");
-
-    let nlp = require('./services/nlp');
-
-    nlp.processString(req.body.speech).then(response => {
-        res.json(response);
-    });
-});
-
-app.get(`${common_path}/get-image-url`, (req, res) => {
+app.get(`${common_path}/nlp-to-image`, (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
     console.log("get-image-url endpoint called");
 
-    let shutterstock = require('./services/shutterstock');
+    let nlpToImage = require('./services/nlpToImage');
 
-    shutterstock.searchImage(req.body.keyword).then(response => {
+    nlpToImage.nlpToImage(req.body.text).then(response => {
         res.json(response);
     }).catch((err) => {console.log(err)});
 });
