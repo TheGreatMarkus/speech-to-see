@@ -40,12 +40,24 @@ module.exports.processString = async function processString(text) {
   });
 
   let object = objects[0].mentions[0].text.content;
+  let content = "";
+  console.log(`object: ${object}`);
+  // Assuming that if you say image, then there is a second noun with smaller salience
+  if (object.toLowerCase() === "image" && objects.length > 1) {
+    query = objects[1].mentions[0].text.content;
+    let shutterstock = require('./shutterstock');
 
-  // TODO
+    content = await shutterstock.searchImage(query);
+  } else if (objects.length > 1) {
+    content = objects[1].mentions[0].text.content;
+  }
+
+
 
   let response = {
     action,
-    object
+    object,
+    content: content
   };
 
   return response;
