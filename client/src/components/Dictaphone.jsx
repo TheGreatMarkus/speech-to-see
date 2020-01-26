@@ -29,13 +29,13 @@ const Dictaphone = ({
       <button onClick={startListening}>start</button>
       <button onClick={stopListening}>stop</button>
       <button onClick={resetTranscript}>Reset</button>
+      <span>{transcript}</span>
     </div>
   );
 };
 
 const options = {
-    autoStart: false,
-    continuous: false
+    autoStart: false
   }
 
 Dictaphone.propTypes = propTypes;
