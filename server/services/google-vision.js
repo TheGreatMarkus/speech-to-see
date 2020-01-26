@@ -1,7 +1,7 @@
 
 const googleVisionApiUrl = 'https://vision.googleapis.com/v1/images:annotate';
 
-export async function getFaceInformation(base64Image, key) {
+module.exports.getFaceInformation =  async function getFaceInformation(base64Image, key) {
     let data = await fetch(`${googleVisionApiUrl}?key=${key}`, {
         method: 'POST',
         body: JSON.stringify({
