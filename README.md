@@ -1,4 +1,4 @@
-# bugs-over-hugs
+# Speech to See
 
 Speech-to-See: Turn your voice into a visual presentation!
 
